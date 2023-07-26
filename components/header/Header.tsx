@@ -10,7 +10,7 @@ interface HeaderProps {
 const Header: React.FC<HeaderProps> = ({ setSidebarOpen }) => {
   const router = useRouter();
   return (
-    <div className="sticky top-0 z-40 flex h-16 shrink-0 items-center gap-x-4 border-b border-secondary bg-secondary px-4 shadow-sm sm:gap-x-6 sm:px-6 lg:px-8 justify-between">
+    <div className="sticky top-0 z-40 flex h-16 shrink-0 items-center gap-x-4  bg-polkadot/60 px-4 shadow-sm sm:gap-x-6 sm:px-6 lg:px-8 justify-between">
       <button
         type="button"
         className="-m-2.5 p-2.5 text-gray-700 lg:hidden"
@@ -19,8 +19,10 @@ const Header: React.FC<HeaderProps> = ({ setSidebarOpen }) => {
         <span className="sr-only">Open sidebar</span>
         <Bars3Icon className="h-6 w-6" aria-hidden="true" />
       </button>
-
-      <Image src='https://polkadot-blockchain-academy.on.fleek.co/assets/img/0-Shared/logo/pba-logo-white.svg' className="items-center" height={48} width={256} alt='logo' />
+      <div className='flex w-full items-center justify-center space-x-4'>
+        <span className='text-3xl text-white font-bold'>PolkaBot</span>
+        <Image src='/polkabot.gif' className="items-center" height={48} width={48} alt='logo' />
+      </div>
 
       {/* <div className="flex-shrink-0" onClick={() => router.push('/settings')}>
         <button

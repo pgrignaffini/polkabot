@@ -40,7 +40,6 @@ function MessageList({ messages, loading, messageListRef }: MessageListProps) {
                       >
                         {isApiMessage ? <div className='flex items-center space-x-2'>
                           <span>POLKABOT</span>
-                          <Image src="/logo.png" alt='logo' height={16} width={16} />
                         </div> : 'YOU'}
                       </span>
                       <div className="mx-auto max-w-full">
