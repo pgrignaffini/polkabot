@@ -61,7 +61,7 @@ const useChats = (namespace: string) => {
     const initialConversation = {
       messages: [
         {
-          message: 'Hi, what would you like to know about these documents?',
+          message: `Hi, what would you like to know about ${namespace}?`,
           type: 'apiMessage' as const,
         },
       ],

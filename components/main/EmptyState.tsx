@@ -14,7 +14,7 @@ const EmptyState: React.FC<EmptyStateProps> = ({
   const router = useRouter();
 
   const selectNamespaceMessage = 'Select a namespace to display chats';
-  const noNamespacesMessage = 'You currently have no namespaces.';
+  const noNamespacesMessage = 'Error loading namespaces. Please try again.';
 
   return (
     <div className="flex flex-col justify-center px-4 pt-24">
@@ -22,10 +22,10 @@ const EmptyState: React.FC<EmptyStateProps> = ({
         {!userHasNamespaces
           ? noNamespacesMessage
           : selectedNamespace && !nameSpaceHasChats
-          ? 'Create a new chat to get started.'
-          : selectNamespaceMessage}
+            ? 'Create a new chat to get started.'
+            : selectNamespaceMessage}
       </h1>
-      {!userHasNamespaces && (
+      {/* {!userHasNamespaces && (
         <div className="flex justify-center">
           <button
             type="button"
@@ -35,7 +35,7 @@ const EmptyState: React.FC<EmptyStateProps> = ({
             Create a namespace
           </button>
         </div>
-      )}
+      )} */}
     </div>
   );
 };

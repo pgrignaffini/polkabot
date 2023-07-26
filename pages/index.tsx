@@ -17,8 +17,10 @@ import { ConversationMessage, Message } from '@/types';
 import { ChatForm, EmptyState, MessageList } from '@/components/main';
 import SidebarList from '@/components/sidebar/SidebarList';
 import Header from '@/components/header/Header';
+import { NextPage } from 'next';
+import Head from 'next/head';
 
-export default function Home() {
+const Home: NextPage = () => {
   const [sidebarOpen, setSidebarOpen] = useState<boolean>(false);
   const [query, setQuery] = useState<string>('');
   const [modelTemperature, setModelTemperature] = useState<number>(0.5);
@@ -275,6 +277,19 @@ export default function Home() {
 
   return (
     <>
+      <Head>
+        <title>
+          PolkaBot
+        </title>
+        <meta
+          name="PolkaBot"
+          content="Your Gateway to Polkadot: Engage with PolkaBot - The Ultimate Blockchain Chatbot!"
+        />
+        <link
+          rel="icon"
+          href="/favicon.ico"
+        />
+      </Head>
       <div className="h-full">
         <Transition.Root show={sidebarOpen} as={Fragment}>
           <Dialog as="div" onClose={setSidebarOpen}>
@@ -418,3 +433,5 @@ export default function Home() {
     </>
   );
 }
+
+export default Home;
