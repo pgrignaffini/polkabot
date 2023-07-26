@@ -6,7 +6,15 @@ module.exports = {
     './components/**/*.{js,ts,jsx,tsx}',
   ],
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        "primary": "#140526",
+        "secondary": "#8e3aec",
+        "tertiary": "#550fa5",
+        "accent": "#00b1ff",
+        "polkadot": "#e6007a"
+      }
+    },
   },
   plugins: [
     require('@tailwindcss/forms'),

@@ -21,7 +21,7 @@
 
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
-  background-color: #5578a1;
+  background-color: #8e3aec;
 }
 
 /* Corner */
@@ -31,16 +31,16 @@
 
 /* Resizer */
 ::-webkit-scrollbar-resizer {
-  background-color: #333;
+  background-color: #8e3aec;
 }
 
 /* Additional Styles */
 ::-webkit-scrollbar-thumb {
-  background-color: #2a496f;
+  background-color: #8e3aec;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background-color: #3e638f;
+  background-color: #8e3aec;
 }
 
 .markdown > * {

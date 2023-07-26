@@ -9,6 +9,7 @@ import {
 } from '@/components/other/accordion/Accordion';
 import remarkGfm from 'remark-gfm';
 import { Message } from '@/types';
+import Image from 'next/image';
 
 interface MessageListProps {
   messages: Message[];
@@ -23,9 +24,8 @@ function MessageList({ messages, loading, messageListRef }: MessageListProps) {
         <div ref={messageListRef}>
           {messages.map((message, index) => {
             const isApiMessage = message.type === 'apiMessage';
-            const messageClasses = ` ${
-              isApiMessage ? 'bg-gray-700/50' : 'bg-gray-800'
-            }`;
+            const messageClasses = ` ${isApiMessage ? 'bg-primary/50' : 'bg-primary/30'
+              }`;
 
             return (
               <div key={`chatMessage-${index}`} className={messageClasses}>
@@ -33,13 +33,15 @@ function MessageList({ messages, loading, messageListRef }: MessageListProps) {
                   <div className="flex flex-col w-full">
                     <div className="w-full text-gray-300 p-2 sm:p-4 overflow-wrap break-words">
                       <span
-                        className={`mt-2 inline-flex items-center rounded-md px-2 py-1 text-xs sm:text-sm font-medium ring-1 ring-inset ${
-                          isApiMessage
-                            ? 'bg-indigo-400/10 text-indigo-400 ring-indigo-400/30'
-                            : 'bg-purple-400/10 text-purple-400 ring-purple-400/30'
-                        }`}
+                        className={`mt-2 inline-flex items-center rounded-md px-2 py-1 text-xs sm:text-sm font-medium ring-1 ring-inset ${isApiMessage
+                          ? 'bg-primary/10 text-polkadot ring-polkadot/30'
+                          : 'bg-primary/10 text-accent ring-accent/30'
+                          }`}
                       >
-                        {isApiMessage ? 'AI' : 'YOU'}
+                        {isApiMessage ? <div className='flex items-center space-x-2'>
+                          <span>POLKABOT</span>
+                          <Image src="/logo.png" alt='logo' height={16} width={16} />
+                        </div> : 'YOU'}
                       </span>
                       <div className="mx-auto max-w-full">
                         <ReactMarkdown

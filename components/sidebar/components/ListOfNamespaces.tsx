@@ -61,7 +61,7 @@ const ListOfNamespaces: React.FC<Props> = ({
       >
         <Menu.Items className="absolute right-0 z-10 mt-2 w-full origin-top-right divide-y divide-gray-700 rounded-md bg-gray-800 shadow-lg ring-1 ring-gray-800 ring-opacity-5 focus:outline-none">
           {namespaces.map((namespace) => (
-            <div className="py-1" key={namespace}>
+            <div className="py-1 cursor-pointer" key={namespace}>
               <Menu.Item>
                 {() => (
                   <p

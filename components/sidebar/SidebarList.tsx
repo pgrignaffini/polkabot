@@ -75,7 +75,7 @@ const SidebarList: React.FC<SidebarListProps> = ({
 
       <>
         <div className="px-4 w-full space-y-2 mb-6">
-          <div className="text-xs sm:text-sm font-semibold leading-6 text-blue-400">
+          <div className="text-xs sm:text-sm font-semibold leading-6 text-accent">
             Your namespaces
           </div>
           <ListOfNamespaces
@@ -86,7 +86,7 @@ const SidebarList: React.FC<SidebarListProps> = ({
           />
         </div>
 
-        <div className="px-4 text-xs sm:text-sm font-semibold leading-6 text-blue-400">
+        <div className="px-4 text-xs sm:text-sm font-semibold leading-6 text-accent">
           Your chats
         </div>
         <div className="px-4 flex-grow overflow-y-auto">

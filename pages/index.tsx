@@ -239,12 +239,12 @@ export default function Home() {
               message: data.text,
               sourceDocs: data.sourceDocuments
                 ? data.sourceDocuments.map(
-                    (doc: any) =>
-                      new Document({
-                        pageContent: doc.pageContent,
-                        metadata: { source: doc.metadata.source },
-                      }),
-                  )
+                  (doc: any) =>
+                    new Document({
+                      pageContent: doc.pageContent,
+                      metadata: { source: doc.metadata.source },
+                    }),
+                )
                 : undefined,
             } as ConversationMessage,
           ],
@@ -324,7 +324,7 @@ export default function Home() {
                       </button>
                     </div>
                   </Transition.Child>
-                  <div className="flex grow flex-col gap-y-5 overflow-y-auto bg-gray-900 px-6 pb-4 ring-1 ring-white/10">
+                  <div className="flex grow flex-col gap-y-5 overflow-y-auto bg-primary px-6 pb-4 ring-1 ring-white/10">
                     <div className="flex h-16 shrink-0 items-center"></div>
                     <SidebarList
                       createChat={createChat}
@@ -354,7 +354,7 @@ export default function Home() {
         </Transition.Root>
 
         <div className="hidden lg:fixed lg:inset-y-0 lg:z-50 lg:flex lg:w-72 lg:flex-col h-screen overflow-y-hidden">
-          <div className="flex grow flex-col bg-gray-900 pb-4 border-r border-gray-800 h-full">
+          <div className="flex grow flex-col bg-primary pb-4 border-r border-primary/40 h-full">
             <div className="flex h-8 shrink-0 items-center"></div>
             <SidebarList
               createChat={createChat}

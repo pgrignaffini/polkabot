@@ -16,10 +16,10 @@ interface Keys {
 
 const useKeys = (): Keys => {
   const [keys, setKeys] = useState({
-    openAIapiKey: getItem('openAIapiKey') || '',
-    pineconeApiKey: getItem('pineconeApiKey') || '',
-    pineconeEnvironment: getItem('pineconeEnvironment') || '',
-    pineconeIndexName: getItem('pineconeIndexName') || '',
+    openAIapiKey: process.env.NEXT_PUBLIC_OPENAI_API_KEY || '',
+    pineconeApiKey: process.env.NEXT_PUBLIC_PINECONE_API_KEY || '',
+    pineconeEnvironment: process.env.NEXT_PUBLIC_PINECONE_ENVIRONMENT || '',
+    pineconeIndexName: 'search-docs',
   });
 
   const setKey = (keyName: string, keyValue: string) => {

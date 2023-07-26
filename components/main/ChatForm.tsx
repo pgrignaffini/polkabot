@@ -56,7 +56,7 @@ const ChatForm = ({
           disabled={loading}
           onKeyDown={handleEnter}
           ref={otherRef}
-          className="flex items-center justify-center w-full text-xs sm:text-sm md:text-base rounded-lg border bg-gray-900 border-gray-700 placeholder-gray-400 text-white focus:outline-none resize-none whitespace-pre-wrap overflow-y-auto"
+          className="flex items-center justify-center w-full text-xs sm:text-sm md:text-base rounded-lg border bg-primary border-accent placeholder-slate-400 text-white focus:outline-none resize-none whitespace-pre-wrap overflow-y-auto"
           autoFocus={false}
           rows={1}
           maxLength={2048}
@@ -66,8 +66,8 @@ const ChatForm = ({
             loading
               ? 'Waiting for response...'
               : error
-              ? 'Error occurred. Try again.'
-              : 'Your message...'
+                ? 'Error occurred. Try again.'
+                : 'Your message...'
           }
           value={query}
           onChange={(e) => setQuery(e.target.value)}
@@ -76,7 +76,7 @@ const ChatForm = ({
       <button
         type="submit"
         disabled={loading}
-        className="inline-flex justify-center p-2 rounded-full cursor-pointer text-blue-500 hover:text-blue-300"
+        className="inline-flex justify-center p-2 rounded-full cursor-pointer text-accent"
       >
         {loading ? (
           <></>
