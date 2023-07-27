@@ -1,6 +1,7 @@
 import { OpenAI } from 'langchain/llms/openai';
 import { PineconeStore } from 'langchain/vectorstores/pinecone';
 import { ConversationalRetrievalQAChain } from 'langchain/chains';
+import { CallbackManager } from 'langchain/callbacks';
 
 const CONDENSE_PROMPT = `Given the chat history and a follow-up question, rephrase the follow-up question to be a standalone question that encompasses all necessary context from the chat history.
 
@@ -37,11 +38,14 @@ export const makeChain = (
   returnSourceDocuments: boolean,
   modelTemperature: number,
   openAIapiKey: string,
+  callbackManager: CallbackManager,
 ) => {
   const model = new OpenAI({
     temperature: modelTemperature, // increase temepreature to get more creative answers
     modelName: 'gpt-3.5-turbo', //change this to gpt-4 if you have access
     openAIApiKey: openAIapiKey,
+    streaming: true,
+    callbackManager: callbackManager,
   });
 
   // Configures the chain to use the QA_PROMPT and CONDENSE_PROMPT prompts and to not return the source documents

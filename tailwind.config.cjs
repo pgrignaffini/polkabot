@@ -1,4 +1,7 @@
 /** @type {import('tailwindcss').Config} */
+
+const defaultTheme = require('tailwindcss/defaultTheme');
+
 module.exports = {
   content: [
     './app/**/*.{js,ts,jsx,tsx}',
@@ -7,6 +10,9 @@ module.exports = {
   ],
   theme: {
     extend: {
+      fontFamily: {
+        'unbounded': ['"Unbounded"', ...defaultTheme.fontFamily.sans],
+      },
       colors: {
         "primary": "#140526",
         "secondary": "#8e3aec",

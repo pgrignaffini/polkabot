@@ -3,6 +3,7 @@ import { OpenAIEmbeddings } from 'langchain/embeddings/openai';
 import { PineconeStore } from 'langchain/vectorstores/pinecone';
 import { makeChain } from '@/utils/makechain';
 import { initPinecone } from '@/utils/pinecone-client';
+import { CallbackManager } from 'langchain/callbacks';
 
 export default async function handler(
   req: NextApiRequest,
@@ -54,20 +55,35 @@ export default async function handler(
       },
     );
 
+    function handleNewToken(token: string) {
+      res.write(`${token}`);
+    }
+
+    const callbackManager = CallbackManager.fromHandlers({
+      async handleLLMNewToken(token: string) {
+        handleNewToken(token);
+      },
+    });
+
     const chain = makeChain(
       vectorStore,
       returnSourceDocuments,
       modelTemperature,
       openAIapiKey as string,
+      callbackManager,
     );
+
     const response = await chain.call({
       question: sanitizedQuestion,
       chat_history: history || [],
     });
 
-    res
-      .status(200)
-      .json({ text: response.text, sourceDocuments: response.sourceDocuments });
+    const jsonString = JSON.stringify({
+      text: response.text,
+      sourceDocuments: response.sourceDocuments,
+    });
+
+    res.end(jsonString);
   } catch (error: any) {
     console.log('error', error);
     res.status(500).json({ error: error.message || 'Something went wrong' });

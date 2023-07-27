@@ -19,6 +19,7 @@ import SidebarList from '@/components/sidebar/SidebarList';
 import Header from '@/components/header/Header';
 import { NextPage } from 'next';
 import Head from 'next/head';
+import { set } from 'lodash';
 
 const Home: NextPage = () => {
   const [sidebarOpen, setSidebarOpen] = useState<boolean>(false);
@@ -59,6 +60,7 @@ const Home: NextPage = () => {
 
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
+  const [responseMessage, setResponseMessage] = useState<string | null>(null);
   const [conversation, setConversation] = useState<{
     messages: ConversationMessage[];
     pending?: string;
@@ -173,6 +175,15 @@ const Home: NextPage = () => {
     textAreaRef.current?.focus();
   }, []);
 
+  function isJSONParsable(str: string) {
+    try {
+      JSON.parse(str);
+      return true;
+    } catch (error) {
+      return false;
+    }
+  }
+
   async function handleSubmit(e: any) {
     e.preventDefault();
     setError(null);
@@ -226,43 +237,101 @@ const Home: NextPage = () => {
       }),
     });
 
-    const data = await response.json();
 
-    if (data.error) {
-      setError(data.error);
+    const stream = response.body;
+    const reader = stream?.getReader();
+
+    if (reader) {
+      console.log('streaming')
+      let jsonResponse: {
+        text: string;
+        sourceDocuments?: Document[];
+      };
+      try {
+        let message = '';
+        while (true) {
+          const { value } = await reader.read();
+          const token = new TextDecoder().decode(value);
+          if (isJSONParsable(token)) {
+            jsonResponse = JSON.parse(token);
+            break;
+          }
+          message += token;
+          setResponseMessage(message);
+        }
+      } catch (error) {
+        console.error(error);
+      } finally {
+        reader.releaseLock();
+        setConversation((prevConversation) => {
+          const updatedConversation = {
+            ...prevConversation,
+            messages: [
+              ...prevConversation.messages,
+              {
+                type: 'apiMessage',
+                message: jsonResponse.text,
+                sourceDocs: jsonResponse.sourceDocuments
+                  ? jsonResponse.sourceDocuments.map(
+                    (doc: any) =>
+                      new Document({
+                        pageContent: doc.pageContent,
+                        metadata: { source: doc.metadata.source },
+                      }),
+                  )
+                  : undefined,
+              } as ConversationMessage,
+            ],
+            history: [
+              ...prevConversation.history,
+              [question, jsonResponse.text] as [string, string],
+            ],
+          };
+          updateConversation(selectedChatId, updatedConversation);
+          setResponseMessage(null);
+          setLoading(false);
+          messageListRef.current?.scrollTo(0, messageListRef.current.scrollHeight);
+          return updatedConversation;
+        });
+      }
     } else {
-      setConversation((prevConversation) => {
-        const updatedConversation = {
-          ...prevConversation,
-          messages: [
-            ...prevConversation.messages,
-            {
-              type: 'apiMessage',
-              message: data.text,
-              sourceDocs: data.sourceDocuments
-                ? data.sourceDocuments.map(
-                  (doc: any) =>
-                    new Document({
-                      pageContent: doc.pageContent,
-                      metadata: { source: doc.metadata.source },
-                    }),
-                )
-                : undefined,
-            } as ConversationMessage,
-          ],
-          history: [
-            ...prevConversation.history,
-            [question, data.text] as [string, string],
-          ],
-        };
-
-        updateConversation(selectedChatId, updatedConversation);
-        return updatedConversation;
-      });
+      setError('Failed to fetch chat response.');
     }
 
-    setLoading(false);
-    messageListRef.current?.scrollTo(0, messageListRef.current.scrollHeight);
+    // const data = await response.json();
+
+    // if (data.error) {
+    //   setError(data.error);
+    // } else {
+    //   setConversation((prevConversation) => {
+    //     const updatedConversation = {
+    //       ...prevConversation,
+    //       messages: [
+    //         ...prevConversation.messages,
+    //         {
+    //           type: 'apiMessage',
+    //           message: data.text,
+    //           sourceDocs: data.sourceDocuments
+    //             ? data.sourceDocuments.map(
+    //               (doc: any) =>
+    //                 new Document({
+    //                   pageContent: doc.pageContent,
+    //                   metadata: { source: doc.metadata.source },
+    //                 }),
+    //             )
+    //             : undefined,
+    //         } as ConversationMessage,
+    //       ],
+    //       history: [
+    //         ...prevConversation.history,
+    //         [question, data.text] as [string, string],
+    //       ],
+    //     };
+
+    //     updateConversation(selectedChatId, updatedConversation);
+    //     return updatedConversation;
+    //   });
+    // }
   }
 
   const handleEnter = (e: any) => {
@@ -403,6 +472,7 @@ const Home: NextPage = () => {
                     messages={messages.map(mapConversationMessageToMessage)}
                     loading={loading}
                     messageListRef={messageListRef}
+                    currentMessage={responseMessage}
                   />
                 </div>
               </div>

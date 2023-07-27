@@ -20,7 +20,7 @@ const Header: React.FC<HeaderProps> = ({ setSidebarOpen }) => {
         <Bars3Icon className="h-6 w-6" aria-hidden="true" />
       </button>
       <div className='flex w-full items-center justify-center space-x-4'>
-        <span className='text-3xl text-white font-bold'>PolkaBot</span>
+        <span className='text-4xl font-unbounded text-white font-bold'>PolkaBot</span>
         <Image src='/polkabot.gif' className="items-center" height={48} width={48} alt='logo' />
       </div>
 

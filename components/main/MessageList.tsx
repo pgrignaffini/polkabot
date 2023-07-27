@@ -15,9 +15,10 @@ interface MessageListProps {
   messages: Message[];
   loading: boolean;
   messageListRef: React.RefObject<HTMLDivElement>;
+  currentMessage: string | null
 }
 
-function MessageList({ messages, loading, messageListRef }: MessageListProps) {
+function MessageList({ messages, loading, messageListRef, currentMessage }: MessageListProps) {
   return (
     <>
       <div className="overflow-y-auto">
@@ -96,6 +97,25 @@ function MessageList({ messages, loading, messageListRef }: MessageListProps) {
               </div>
             );
           })}
+          {
+            currentMessage &&
+            <div className='bg-primary/50'>
+              <div className="flex items-center justify-start max-w-full sm:max-w-4xl  mx-auto overflow-hidden px-2 sm:px-4">
+                <div className="flex flex-col w-full">
+                  <div className="w-full text-gray-300 p-2 sm:p-4 overflow-wrap break-words">
+                    <span
+                      className={`mt-2 inline-flex items-center rounded-md px-2 py-1 text-xs sm:text-sm font-medium ring-1 ring-inset bg-primary/10 text-polkadot ring-polkadot/30'`}
+                    >
+                      <span>POLKABOT</span>
+                    </span>
+                    <div className="mx-auto max-w-full mt-2">
+                      <span className="markdown text-xs sm:text-sm md:text-base leading-relaxed">{currentMessage}</span></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          }
+
         </div>
       </div>
       {loading && (
