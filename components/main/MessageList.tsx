@@ -104,7 +104,7 @@ function MessageList({ messages, loading, messageListRef, currentMessage }: Mess
                 <div className="flex flex-col w-full">
                   <div className="w-full text-gray-300 p-2 sm:p-4 overflow-wrap break-words">
                     <span
-                      className={`mt-2 inline-flex items-center rounded-md px-2 py-1 text-xs sm:text-sm font-medium ring-1 ring-inset bg-primary/10 text-polkadot ring-polkadot/30'`}
+                      className="mt-2 inline-flex items-center rounded-md px-2 py-1 text-xs sm:text-sm font-medium ring-1 ring-inset bg-primary/10 text-polkadot ring-polkadot/30"
                     >
                       <span>POLKABOT</span>
                     </span>

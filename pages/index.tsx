@@ -263,6 +263,8 @@ const Home: NextPage = () => {
         console.error(error);
       } finally {
         reader.releaseLock();
+        setResponseMessage(null);
+        setLoading(false);
         setConversation((prevConversation) => {
           const updatedConversation = {
             ...prevConversation,
@@ -288,8 +290,6 @@ const Home: NextPage = () => {
             ],
           };
           updateConversation(selectedChatId, updatedConversation);
-          setResponseMessage(null);
-          setLoading(false);
           messageListRef.current?.scrollTo(0, messageListRef.current.scrollHeight);
           return updatedConversation;
         });
@@ -478,6 +478,7 @@ const Home: NextPage = () => {
               </div>
             ) : (
               <EmptyState
+                isLoadingNamespaces={isLoadingNamespaces}
                 nameSpaceHasChats={nameSpaceHasChats}
                 selectedNamespace={selectedNamespace}
                 userHasNamespaces={userHasNamespaces}
