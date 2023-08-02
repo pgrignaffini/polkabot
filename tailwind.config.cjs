@@ -13,7 +13,10 @@ module.exports = {
         "tertiary": "#550fa5",
         "accent": "#00b1ff",
         "polkadot": "#e6007a"
-      }
+      },
+      fontFamily: {
+        'unbounded': ['Unbounded', 'sans-serif'],
+      },
     },
   },
   plugins: [
