@@ -230,6 +230,36 @@ const Home: NextPage = () => {
 
     if (data.error) {
       setError(data.error);
+      const message = "Sorry something went wrong, please try again."
+      setConversation((prevConversation) => {
+        const updatedConversation = {
+          ...prevConversation,
+          messages: [
+            ...prevConversation.messages,
+            {
+              type: 'apiMessage',
+              message,
+              sourceDocs: data.sourceDocuments
+                ? data.sourceDocuments.map(
+                  (doc: any) =>
+                    new Document({
+                      pageContent: doc.pageContent,
+                      metadata: { source: doc.metadata.source },
+                    }),
+                )
+                : undefined,
+            } as ConversationMessage,
+          ],
+          history: [
+            ...prevConversation.history,
+            [question, message] as [string, string],
+          ],
+        };
+
+        updateConversation(selectedChatId, updatedConversation);
+        return updatedConversation;
+      })
+
     } else {
       setConversation((prevConversation) => {
         const updatedConversation = {
