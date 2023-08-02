@@ -4,12 +4,14 @@ interface EmptyStateProps {
   nameSpaceHasChats: boolean;
   selectedNamespace: string;
   userHasNamespaces: boolean;
+  isLoadingNamespaces: boolean;
 }
 
 const EmptyState: React.FC<EmptyStateProps> = ({
   nameSpaceHasChats,
   selectedNamespace,
   userHasNamespaces,
+  isLoadingNamespaces
 }) => {
   const router = useRouter();
 
@@ -19,11 +21,12 @@ const EmptyState: React.FC<EmptyStateProps> = ({
   return (
     <div className="flex flex-col justify-center px-4 pt-24">
       <h1 className="text-xl md:text-3xl text-center font-semibold text-gray-100 mb-6">
-        {!userHasNamespaces
-          ? noNamespacesMessage
-          : selectedNamespace && !nameSpaceHasChats
-            ? 'Create a new chat to get started.'
-            : selectNamespaceMessage}
+        {isLoadingNamespaces ? 'Loading namespaces...' :
+          !userHasNamespaces
+            ? noNamespacesMessage
+            : selectedNamespace && !nameSpaceHasChats
+              ? 'Create a new chat to get started.'
+              : selectNamespaceMessage}
       </h1>
       {/* {!userHasNamespaces && (
         <div className="flex justify-center">

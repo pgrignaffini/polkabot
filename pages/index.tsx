@@ -438,6 +438,7 @@ const Home: NextPage = () => {
               </div>
             ) : (
               <EmptyState
+                isLoadingNamespaces={isLoadingNamespaces}
                 nameSpaceHasChats={nameSpaceHasChats}
                 selectedNamespace={selectedNamespace}
                 userHasNamespaces={userHasNamespaces}
