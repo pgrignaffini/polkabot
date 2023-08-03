@@ -2,8 +2,6 @@ FROM node:current-slim
 
 RUN apt-get update && apt-get install -y \
     tzdata \
-    tini \
-    nfs-common \
     netbase \
     && rm -rf /var/lib/apt/lists/*
 
@@ -24,10 +22,6 @@ RUN \
     fi
 
 RUN yarn build && yarn cache clean && rm -rf /usr/local/share/.cache/yarn
-
-# Use tini to manage zombie processes and signal forwarding
-# https://github.com/krallin/tini
-ENTRYPOINT ["/usr/bin/tini", "--"]
 
 # Pass the startup script as arguments to tini
 RUN yarn start -p 3000
