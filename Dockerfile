@@ -2,6 +2,7 @@ FROM node:current-slim
 
 RUN apt-get update && apt-get install -y \
     tzdata \
+    tini \
     netbase \
     && rm -rf /var/lib/apt/lists/*
 
@@ -11,7 +12,7 @@ RUN ln -fs /usr/share/zoneinfo/America/Los_Angeles /etc/localtime && \
 
 WORKDIR /app
 
-# Copy all files
+# Copy all files except the "functions" folder
 COPY ./ /app/
 
 RUN \
@@ -23,5 +24,12 @@ RUN \
 
 RUN yarn build && yarn cache clean && rm -rf /usr/local/share/.cache/yarn
 
+# Ensure the script is executable
+RUN chmod +x /app/run.sh
+
+# Use tini to manage zombie processes and signal forwarding
+# https://github.com/krallin/tini
+ENTRYPOINT ["/usr/bin/tini", "--"]
+
 # Pass the startup script as arguments to tini
-RUN yarn start -p 3000
+CMD ["/app/run.sh"]
