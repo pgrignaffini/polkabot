@@ -4,7 +4,7 @@ const withPWA = require('next-pwa')({
   dest: 'public'
 })
 
-module.exports = withPWA({
+export default withPWA({
   reactStrictMode: true,
   swcMinify: true,
   webpack(config) {
