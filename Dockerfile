@@ -13,9 +13,8 @@ RUN ln -fs /usr/share/zoneinfo/America/Los_Angeles /etc/localtime && \
 
 WORKDIR /app
 
-# Copy all files except the "functions" folder
+# Copy all files
 COPY ./ /app/
-RUN find /app/functions -mindepth 1 -delete
 
 RUN \
     if [ -f yarn.lock ]; then yarn --frozen-lockfile; \
