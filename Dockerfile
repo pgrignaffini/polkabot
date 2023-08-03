@@ -33,4 +33,4 @@ RUN chmod +x /app/run.sh
 ENTRYPOINT ["/usr/bin/tini", "--"]
 
 # Pass the startup script as arguments to tini
-CMD ["/app/run.sh"]
+RUN yarn start
