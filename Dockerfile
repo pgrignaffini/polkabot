@@ -30,4 +30,4 @@ RUN yarn build && yarn cache clean && rm -rf /usr/local/share/.cache/yarn
 ENTRYPOINT ["/usr/bin/tini", "--"]
 
 # Pass the startup script as arguments to tini
-RUN yarn start
+RUN yarn start -p 3000
