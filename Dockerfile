@@ -25,9 +25,6 @@ RUN \
 
 RUN yarn build && yarn cache clean && rm -rf /usr/local/share/.cache/yarn
 
-# Ensure the script is executable
-RUN chmod +x /app/run.sh
-
 # Use tini to manage zombie processes and signal forwarding
 # https://github.com/krallin/tini
 ENTRYPOINT ["/usr/bin/tini", "--"]
